@@ -20,30 +20,32 @@
     <!-- 表单 -->
     <group class="form-area">
       <x-input
-        title="车主姓名">
+        title="车主姓名"
+        is-type="china-name">
       </x-input>
       <x-input
-        title="身份证">
+        title="身份证"
+        :min="15"
+        :max="18">
       </x-input>
-      <cell
-        title="手机号">
-        <x-input></x-input>
-      </cell>
-      <cell 
+      <x-input
+        title="手机号"
+        :max="11"
+        is-type="china-mobile">
+      </x-input>
+      <x-input
         title="邮箱">
-        <x-input></x-input>
-      </cell>
+      </x-input>
       <x-input
         is="cell"
         :is-link="true"
         title="邮寄地址">
-        
       </x-input>
-      <cell 
-        :is-link="true"
-        title="初次领驾照日期">
-        <x-input></x-input>
-      </cell>
+      <datetime
+        title="初次领驾照日期"
+        cancel-text="取消"
+        confirm-text="完成">
+      </datetime>
     </group>
 
     <!-- 按钮 -->
@@ -55,7 +57,7 @@
 </template>
 
 <script>  
-  import { XHeader, Group, Cell, Radio, XButton, XProgress, XInput } from 'vux'
+  import { XHeader, Group, Cell, Radio, XButton, XProgress, XInput, Datetime } from 'vux'
   import Blocks from './blocks'
 
   export default {
@@ -68,6 +70,7 @@
       XButton,
       XProgress,
       XInput,
+      Datetime,
       ...Blocks
     },
     data () {
@@ -93,6 +96,8 @@
 </script>
 
 <style lang="stylus">
+  @import '../assets/css/variable'
+
   .progress-span
     display flex
     justify-content space-between
@@ -105,5 +110,11 @@
 
     .weui_input
       text-align right
+
+    .weui_cell
+      height 36px
+
+  .dp-header .dp-item
+    color $m-color!important
 
 </style>
