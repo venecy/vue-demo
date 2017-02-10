@@ -3,10 +3,12 @@ import Router from 'vue-router'
 import Start from 'components/Start'
 import Info from 'components/Info'
 import VuxHello from 'components/HelloFromVux'
+import Address from 'components/Address'
 
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     {
       path: '/vux',
@@ -23,5 +25,10 @@ export default new Router({
       name: 'info',
       component: Info,
     },
+    {
+      path: '/address',
+      name: 'address',
+      component: Address
+    }
   ]
 })

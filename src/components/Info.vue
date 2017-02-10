@@ -8,7 +8,7 @@
 
     <!-- 进度条 -->
     <progress-bar
-      v-if="status.progressShowing"
+      v-if="progressShowing"
       @on-cancel="closeProgress"
       :percent="50">
       <div class="progress-span">
@@ -21,28 +21,37 @@
     <group class="form-area">
       <x-input
         title="车主姓名"
+        v-model="info.carOwner.name"
         is-type="china-name">
       </x-input>
       <x-input
         title="身份证"
+        v-model="info.carOwner.identifyNumber"
         :min="15"
         :max="18">
       </x-input>
       <x-input
         title="手机号"
+        :min="11"
         :max="11"
+        keyboard="number"
+        v-model="info.carOwner.phone"
         is-type="china-mobile">
       </x-input>
       <x-input
-        title="邮箱">
+        title="邮箱"
+        v-model="info.carOwner.eMail"
+        is-type="email">
       </x-input>
-      <x-input
-        is="cell"
-        :is-link="true"
-        title="邮寄地址">
-      </x-input>
+      <cell 
+        title="邮寄地址"
+        link="/address" 
+        :is-link="true">
+        <span>{{taAreaCode}}<br v-if="address">{{address}}</span>
+      </cell>
       <datetime
         title="初次领驾照日期"
+        v-model="info.carOwner.acceptLicenseDate"
         cancel-text="取消"
         confirm-text="完成">
       </datetime>
@@ -50,7 +59,7 @@
 
     <!-- 按钮 -->
     <router-link 
-      to="/#">
+      to="#">
       <x-button class="next-btn">下一步，车辆信息</x-button>
     </router-link>
   </div>
@@ -82,16 +91,38 @@
             preventGoBack: false
           }
         },
-        status: {
-          progressShowing: true,
-        }
+        progressShowing: true,
       }
     },
     methods: {
       closeProgress() {
         this.status.progressShowing = false
       }
-    }
+    },
+    watch: {
+      info: {
+        deep: true,
+        handler(newVal, oldVal) {
+          this.$store.commit('updateCarOwner', newVal)
+        }
+      },
+    },
+    computed: {
+      info() {
+        return this.$store.state.info
+      },
+      status() {
+        return this.$store.state.status
+      },
+      address() {
+        let add = this.$store.state.info.carOwner.address
+        return add
+      },
+      taAreaCode() {
+        let ta = this.$store.state.info.taAreaCode
+        return ta.split(' ').join(',')
+      }
+    },
   }
 </script>
 
@@ -104,17 +135,5 @@
     padding 1px 15px
     font-size 13px
     color #555
-
-  .form-area
-    margin 10px 0
-
-    .weui_input
-      text-align right
-
-    .weui_cell
-      height 36px
-
-  .dp-header .dp-item
-    color $m-color!important
 
 </style>

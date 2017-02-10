@@ -1,9 +1,13 @@
+@import './variable.styl'
+
 .vux-header 
   padding 0
+  background-color $header-background-color
 
 .vux-header .vux-header-title, .vux-header h1 
   height 48px;
   line-height 48px;
+  color $header-text-color
 
 .vux-header .vux-header-left .left-arrow
   @css {
@@ -13,5 +17,5 @@
   background-position center
   background-size auto 16px
 
-  // &:before
-  //   display none
+.vux-header .vux-header-right span
+  color $header-text-color

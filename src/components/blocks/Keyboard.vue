@@ -155,10 +155,13 @@
 </script>
 
 <style lang="stylus" scoped>
-  $m-color: #f57910
+  $m-color = #f57910
   .picker-modal.picker-modal-keyboard {
     position: fixed;
     display: block;
+    width: 100%;
+    left: 0;
+    bottom: 0;
   }
   // key-board 
   .picker-modal-keyboard .bd .keyboard-row {
@@ -178,6 +181,10 @@
       }
   }
 
+  .key.key-next {
+    color: $m-color;
+  }
+
   .picker-modal-keyboard{height:auto;background: none;}
   .picker-modal-keyboard .hd{height:20px;text-align: right;}
   .picker-modal-keyboard .hd:after{content: '';border-top: 20px solid transparent;border-right: 20px solid #C1C4CD;position: absolute;right:30px;top:0;}
@@ -190,4 +197,8 @@
   .picker-modal-keyboard .bd .keyboard-row .key.key-next{width: 90%;}
   .picker-modal-keyboard .bd .keyboard-row .key.key-ok{width: 28.5%;}
   .picker-modal-keyboard .bd .keyboard-row .key.key-del{width: 15%;}
+  @css {
+    .arrow-down-white{background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg%20viewBox%3D\'0%200%2060%20120\'%20xmlns%3D\'http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg\'%3E%3Cpath%20d%3D\'m60%2061.5-38.25%2038.25-9.75-9.75%2029.25-28.5-29.25-28.5%209.75-9.75z\'%20transform%3D\'translate(115%2C%2030)%20rotate(90)\'%20fill%3D\'%23fff\'%2F%3E%3C%2Fsvg%3E");background-size: 20px 20px;background-position: right center;background-repeat: no-repeat;padding-right: 20px;}
+  }
+
 </style>

@@ -8,11 +8,12 @@
     </x-header>
 
     <!-- 投保城市: areaCode -->
-    <group class="area-code-group">
-      <cell 
+    <group class="area-code">
+      <x-address
         title="投保城市"
-        :is-link="true">
-      </cell>
+        v-model="addressData.value"
+        :list="addressData.china">
+      </x-address>
     </group>
 
     <!-- 牌照: carNumber -->
@@ -36,7 +37,7 @@
 </template>
 
 <script>
-  import { XHeader, Group, Cell, Radio, XButton } from 'vux'
+  import { XHeader, Group, Cell, Radio, XButton, XAddress, ChinaAddressData, Value2nameFilter } from 'vux'
   import Blocks from './blocks'
 
   export default {
@@ -47,6 +48,7 @@
       Cell,
       Radio,
       XButton,
+      XAddress,
       ...Blocks
     },
     data() {
@@ -61,25 +63,52 @@
         radioGroup: {
           options: ['已有牌照', '未上照'],
         },
-        status: {
-          hasLicense: '已有牌照'
-        },
-        info: {
-          car: {
-            carNumber: '豫A12345'
-          },
-        },
+        addressData: {
+          china: ChinaAddressData,
+          value: ['370000', '370600', '370602']
+        }
       }
+    },
+    watch: {
+      areaCode(newVal) {
+        this.info.areaCode = newVal
+        this.info.taAreaCode = Value2nameFilter(this.addressData.value, ChinaAddressData)
+      },
+      info: {
+        deep: true,
+        handler(newVal, oldVal) {
+          this.$store.commit('updateAreaCode', newVal)
+          this.$store.commit('updateCar', newVal)
+          this.$store.commit('updateTaAreaCode', newVal)
+        }
+      },
+      status: {
+        deep: true,
+        handler(newVal, oldVal) {
+          this.$store.commit('updateLicense', newVal)
+        }
+      },
     },
     computed: {
       license() {
         return this.status.hasLicense === '已有牌照'
+      },
+      areaCode() {
+        return this.addressData.value[2]
+      },
+      info() {
+        return this.$store.state.info
+      },
+      status() {
+        return this.$store.state.status
       }
-    }
+    },
   }
 </script>
 
 <style lang="stylus">
+  @import '../assets/css/variable.styl'
+
   .car-number
     display flex
 
@@ -94,8 +123,12 @@
       &:after
         display none
 
+  .area-code .vux-popup-picker-header
+    color $m-color
+
   #app .weui_cells
     font-size 16px
     color #555
+
 
 </style>

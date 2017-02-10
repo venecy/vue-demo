@@ -101,6 +101,8 @@
     margin-top: 5px;
     font-size: medium !important;
     padding: 0px 15px;
+    input
+      outline none
 
   // 车牌号
   .vehicle-id-select {
